@@ -1,0 +1,14 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@page "/logout"
+@inject SignInManager<IdentityUser> signInManager
+@inject NavigationManager navigationManager
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await signInManager.SignOutAsync();
+        navigationManager.NavigateTo("/");
+    }
+
+}

@@ -1,0 +1,79 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using SmartSchool.Web.Components.Layout
+@using System.ComponentModel.DataAnnotations
+@using System.Security.Claims
+
+@page "/login"
+@layout AuthLayout
+@attribute [AllowAnonymous]
+
+@inject NavigationManager navigationManager
+@inject UserManager<IdentityUser> userManager
+@inject IUserStore<IdentityUser> userStore
+@inject SignInManager<IdentityUser> signInManager
+@inject RoleManager<IdentityRole> roleManager
+
+<EditForm method="post" Model="LoginForm" OnValidSubmit="PerformLogin" FormName="login" style="margin-top:-10px">
+    <hr />
+
+    <div class="form-outline">
+        <label for="email" class="form-label">Email:</label>
+        <InputText @bind-Value="LoginForm.Email" required placeholder="user@example.com" class="form-control"/>
+    </div>
+
+    <div class="form-outline">
+        <label for="password" class="form-label">Password:</label>
+        <InputText type="password" @bind-Value="LoginForm.Password" class="form-control" />
+    </div>
+
+    <div class="text-center pt-1 mb-5 pb-1">
+        <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3 type="submit">Login</button>
+    </div>
+</EditForm>
+
+@code {
+    [SupplyParameterFromForm]
+    public LoginModel LoginForm { get; set; } = new();
+
+    public async Task PerformLogin(EditContext editContext)
+    {
+        // var identity = new IdentityUser();
+
+        // await userManager.SetUserNameAsync(identity, LoginForm.Email);
+
+        // var emailStore = (IUserEmailStore<IdentityUser>)userStore;
+        // await emailStore.SetEmailAsync(identity, LoginForm.Email, CancellationToken.None);
+
+        // var result = await userManager.CreateAsync(identity, LoginForm.Password);
+
+        // var claims = new List<Claim>
+        // {
+        //     new("firstName", "saheed"),
+        //     new("lastName", "adeniji")
+        // };
+
+        // await userManager.AddClaimsAsync(identity, claims);
+
+        // var superAdminRole = new IdentityRole("Superadmin");
+        // await roleManager.CreateAsync(superAdminRole);
+
+        // await userManager.AddToRoleAsync(identity, "Superadmin");
+
+        await signInManager.PasswordSignInAsync(LoginForm.Email, LoginForm.Password, true, lockoutOnFailure: false);
+
+        navigationManager.NavigateTo("/");  
+    }
+
+    public class LoginModel
+    {
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; } = string.Empty;
+
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
+        public string Password { get; set; } = string.Empty;
+    }
+}
