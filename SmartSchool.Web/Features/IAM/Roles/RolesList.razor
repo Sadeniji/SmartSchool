@@ -1,0 +1,95 @@
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.EntityFrameworkCore
+@using SmartSchool.Web.Data
+
+@page "/iam/roles"
+@* @attribute [StreamRendering(true)] *@
+@*  @rendermode @(new InteractiveAutoRenderMode(prerender: false))
+ *@
+
+ @rendermode RenderMode.InteractiveServer
+@inject IDbContextFactory<AppDbContext> contextFactory
+
+<PageTitle>Roles</PageTitle>
+
+<AuthorizeView Roles="Superadmin">
+    <Authorized>
+        @if (IsLoading)
+        {
+            <div>Loading data....</div>
+        }
+        else
+        {
+            <div class="row" style="margin-top:20px">
+                <div class="col-3">
+                    <button class="btn btn-primary" type="button" data-bs-toggle="modal"
+                            data-bs-target="#error-modal">
+                        Add role
+                    </button>
+                    <AddRoleModal OnRoleAdded="UpdateRoles" />
+                </div>
+            </div>
+            <div class="row m5">
+                <div class="table-responsive scrollbar col-6" style="background-color:whitesmoke">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Role name</th>
+                                <th class="text-end" scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Roles.Count > 0)
+                            {
+                                @foreach (var role in Roles)
+                                {
+                                    <tr>
+                                        <td>@role.Name</td>
+                                        <td class="text-end">
+                                            <div>
+                                                <button class="btn btn-danger btn-rounded" type="button"
+                                                        data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"
+                                                        @onclick="@(() => DeleteRole(role))">
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        }
+    </Authorized>
+</AuthorizeView>
+
+
+@code {
+    private List<IdentityRole> Roles { get; set; } = new();
+    public bool IsLoading { get; set; } = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = await contextFactory.CreateDbContextAsync();
+        Roles = await context.Roles.ToListAsync();
+        IsLoading = false;
+    }
+
+    private async Task DeleteRole(IdentityRole role)
+    {
+        using var context = await contextFactory.CreateDbContextAsync();
+        context.Roles.Remove(role);
+        await context.SaveChangesAsync();
+        Roles.Remove(role);
+    }
+
+    private void UpdateRoles(IdentityRole role)
+    {
+        Roles.Add(role);
+    }
+}
+                                                

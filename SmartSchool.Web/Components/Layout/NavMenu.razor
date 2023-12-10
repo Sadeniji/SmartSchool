@@ -1,0 +1,25 @@
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@* @inject AuthenticationStateProvider authState
+ *@
+<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">SmartSchool</a>
+    </div>
+</div>
+
+<div class="nav-scrollable">
+    <nav class="flex-column">
+        <AuthorizeView Roles="Superadmin">
+            <Authorized>
+                <IamNavLink />
+            </Authorized>
+        </AuthorizeView>
+    </nav>
+</div>
+
+@code {
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     var user = await authState.GetAuthenticationStateAsync();
+    // }
+}

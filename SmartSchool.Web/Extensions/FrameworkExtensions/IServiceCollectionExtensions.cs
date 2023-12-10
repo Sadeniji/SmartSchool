@@ -25,6 +25,8 @@ namespace SmartSchool.Web.Extensions.FrameworkExtensions
                 options.EventsType = typeof(CookieEvents);
             });
 
+            services.AddAuthorization();
+
             return services;
         }
     }

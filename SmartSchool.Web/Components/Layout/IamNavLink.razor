@@ -1,0 +1,30 @@
+﻿<div>
+    @* <div class="nav-item px-3">
+        <button class="nav-link" type="button" data-bs-toggle="collapse" 
+            data-bs-target="#iammenu" aria-expanded="false" aria-controls="iammenu">
+            IAM
+        </button>
+    </div> *@
+    <div id="iammenu">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="iam/roles" Match="NavLinkMatch.All">
+                <span class="bi" aria-hidden="true"></span>Roles
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="iam/students" Match="NavLinkMatch.All">
+                <div class="d-flex align-items-center">
+                    <span class="bi" aria-hidden="true"></span>Students
+                </div>
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="iam/teachers">
+                <div class="d-flex align-items-center">
+                    <span class="bi" aria-hidden="true"></span>Teachers
+                </div>
+            </NavLink>
+        </div>
+    </div>
+</div>
