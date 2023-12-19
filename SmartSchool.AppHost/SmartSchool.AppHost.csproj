@@ -13,6 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SmartSchool.Bff\SmartSchool.Bff.csproj" />
+    <ProjectReference Include="..\SmartSchool.Students\SmartSchool.Students.csproj" />
     <ProjectReference Include="..\SmartSchool.Web\SmartSchool.Web.csproj" />
   </ItemGroup>
 

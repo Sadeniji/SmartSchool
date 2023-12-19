@@ -1,0 +1,6 @@
+@SmartSchool.Bff_HostAddress = http://localhost:5065
+
+GET {{SmartSchool.Bff_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -5,10 +5,11 @@
 
 @page "/iam/roles"
 @* @attribute [StreamRendering(true)] *@
-@*  @rendermode @(new InteractiveAutoRenderMode(prerender: false))
- *@
+ @rendermode @(new InteractiveServerRenderMode(prerender: false))
 
- @rendermode RenderMode.InteractiveServer
+
+@*  @rendermode RenderMode.InteractiveServer
+ *@
 @inject IDbContextFactory<AppDbContext> contextFactory
 
 <PageTitle>Roles</PageTitle>
